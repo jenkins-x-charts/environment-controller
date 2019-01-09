@@ -1,0 +1,34 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: {{ template "hook.name" . }}
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - list
+    - update
+    - create
+    - get
+  - apiGroups:
+    - ""
+    resources:
+    - namespaces
+    verbs:
+    - get
+  - apiGroups:
+    - "prow.k8s.io"
+    resources:
+    - prowjobs
+    verbs:
+    - create
+    - list
+  - apiGroups:
+    - jenkins.io
+    resources:
+    - pipelineactivities
+    verbs:
+    - create
+    - list
