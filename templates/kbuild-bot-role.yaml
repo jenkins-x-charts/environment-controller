@@ -1,0 +1,85 @@
+{{- if .Values.build.auth.git.username }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: knative-build-bot
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - list
+  - get
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+- apiGroups:
+  - jenkins.io
+  resources:
+  - pipelineactivities
+  verbs:
+  - get
+  - create
+  - update
+- apiGroups:
+  - jenkins.io
+  resources:
+  - plugins
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - jenkins.io
+  resources:
+  - users
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+- apiGroups:
+  - jenkins.io
+  resources:
+  - releases
+  verbs:
+  - get
+  - create
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - jenkins.io
+  resources:
+  - pipelineactivities
+  verbs:
+  - get
+  - create
+  - update
+- apiGroups:
+  - jenkins.io
+  resources:
+  - environments
+  verbs:
+  - create
+  - list
+  - get
+  - update
+{{- end }}

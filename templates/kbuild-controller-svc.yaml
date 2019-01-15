@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ template "build.controller.name" . }}
+  name: {{ template "build.controller.name" . }}
+spec:
+  ports:
+  - name: metrics
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    app: {{ template "build.controller.name" . }}

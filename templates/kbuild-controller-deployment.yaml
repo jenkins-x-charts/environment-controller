@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "build.controller.name" . }}
+  labels:
+    app: {{ template "build.controller.name" . }}
+spec:
+  replicas: {{ .Values.build.controller.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "build.controller.name" . }}
+    spec:
+      serviceAccountName: {{ template "build.controller.name" . }}
+      terminationGracePeriodSeconds: {{ .Values.build.controller.terminationGracePeriodSeconds }}
+      containers:
+      - name: {{ template "build.controller.name" . }}
+        image: {{ .Values.build.controller.image.repository }}:{{ .Values.build.controller.image.tag }}
+        imagePullPolicy: {{ .Values.build.controller.imagePullPolicy }}
+        env:
+        - name: SYSTEM_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+{{ if .Values.build.controller.args }}
+        args:
+{{ toYaml .Values.build.controller.args | indent 10 }}
+{{- end }}
+        resources:
+{{ toYaml .Values.build.controller.resources | indent 10 }}
+    {{- with .Values.build.controller.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.build.controller.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.build.controller.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+        volumeMounts:
+        - mountPath: /etc/config-logging
+          name: config-logging
+      volumes:
+      - configMap:
+          name: config-logging
+        name: config-logging

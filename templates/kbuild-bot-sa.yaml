@@ -1,0 +1,8 @@
+{{- if .Values.build.auth.git.username }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: knative-build-bot
+secrets:
+- name: knative-basic-user-pass
+{{- end }}
