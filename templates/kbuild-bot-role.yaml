@@ -48,6 +48,7 @@ rules:
   - create
   - get
   - list
+  - update
   - watch
 - apiGroups:
   - jenkins.io
