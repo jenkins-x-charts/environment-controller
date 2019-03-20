@@ -1,7 +1,9 @@
 CHART_REPO := http://jenkins-x-chartmuseum:8080
 NAME := environment-controller
 OS := $(shell uname)
-VERSION := $(shell cat ./VERSION)
+
+CHARTMUSEUM_CREDS_USR := $(shell cat /builder/home/basic-auth-user.json)
+CHARTMUSEUM_CREDS_PSW := $(shell cat /builder/home/basic-auth-pass.json)
 
 init: 
 	helm init --client-only
