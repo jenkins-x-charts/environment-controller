@@ -1,182 +1,38 @@
-# Default values for prow.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-build:
-  controller:
-    replicaCount: 1
-    image:
-      # use custom image until upstream PR merged https://github.com/knative/build/pull/519
-      #repository: gcr.io/knative-releases/github.com/knative/build/cmd/controller@sha256
-      repository: rawlingsj/build-controller
-      tag: upstream3
-    imagePullPolicy: IfNotPresent
-    terminationGracePeriodSeconds: 30
-    args:
-    - -logtostderr
-    - -stderrthreshold
-    - INFO
-    - -creds-image
-    - gcr.io/knative-releases/github.com/knative/build/cmd/creds-init@sha256:7492c3a729101066d959281182a1322a4f5e273f2335f3ea47ee7f049cde424c
-    - -git-image
-    - gcr.io/knative-releases/github.com/knative/build/cmd/git-init@sha256:6186bee422a984b5bc4e5f794c24fc33b430af8e6a8541751a6fde7c4776c079
-    - -nop-image
-    - gcr.io/knative-releases/github.com/knative/build/cmd/nop@sha256:1acff01d02c30e9a5b2911a06d65b451d62d6ea70091e87032d9e53f356975f7
-    resources:
-      limits:
-      cpu: 200m
-      memory: 256Mi
-      requests:
-      cpu: 100m
-      memory: 128Mi
-    service:
-      type: ClusterIP
-      externalPort: 9090
-      internalPort: 9090
-  auth:
-    git:
-      username:
-      password:
-      # username: my-bot
-      # password: my-bot-token
+# allows you to define the hmac secret from a helm secret
+# if not specified its generated on the fly
+hmacToken: ""
 
-buildnum:
-  image:
-    repository: jenkinsxio/jx
-    jxTag: 1.3.590
-  imagePullPolicy: IfNotPresent
-  terminationGracePeriodSeconds: 180
-  command:
-  - jx
-  args:
-  - "controller"
-  - "buildnumbers"
-  resources:
-    limits:
-     cpu: 400m
-     memory: 256Mi
-    requests:
-     cpu: 200m
-     memory: 128Mi
-  service:
-    type: ClusterIP
-    externalPort: 80
-    internalPort: 8080
+image:
+  repository: gcr.io/jenkinsxio/builder-maven
+  tag: 0.1.340
+imagePullPolicy: IfNotPresent
+terminationGracePeriodSeconds: 180
+probe:
+  livenessPath: /health
+  readinessPath: /ready
+command:
+- jx
+args:
+- "controller"
+- "environment"
+resources:
+  limits:
+   cpu: 400m
+   memory: 256Mi
+  requests:
+   cpu: 200m
+   memory: 128Mi
+service:
+  name: environment-controller
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 8080
+  annotations:
+    fabric8.io/expose: "true"
+    fabric8.io/ingress.annotations: "kubernetes.io/ingress.class: nginx"
 
-crier:
-  image:
-    repository: docker.io/garethjevans/crier
-    tag: upstream03
-  imagePullPolicy: IfNotPresent
-  terminationGracePeriodSeconds: 180
-  args:
-    - -gerrit-workers=0
-    - -github-workers=1
-    - -logtostderr
-    - -config-path=/etc/config/config.yaml
-    - -github-token-path=/etc/github/oauth
-  resources:
-    limits:
-     cpu: 400m
-     memory: 256Mi
-    requests:
-     cpu: 200m
-     memory: 128Mi
-
-hook:
-  replicaCount: 2
-  probe:
-    path: /
-  image:
-    # repository: gcr.io/k8s-prow/hook
-    # tag: v20181113-9b11013
-    repository: rawlingsj/hook
-    tag: upstream56
-  imagePullPolicy: IfNotPresent
-  terminationGracePeriodSeconds: 180
-  args:
-    - --dry-run=false
-  resources:
-    limits:
-     cpu: 400m
-     memory: 256Mi
-    requests:
-     cpu: 200m
-     memory: 128Mi
-  service:
-    type: ClusterIP
-    externalPort: 80
-    internalPort: 8888
-    annotations:
-      fabric8.io/expose: "true"
-
-buildcontroller:
-  image:
-    repository: rawlingsj/build
-    tag: upstream124
-    # repository: gcr.io/k8s-prow/build
-    # tag: v20181113-9b11013
-  imagePullPolicy: IfNotPresent
-  terminationGracePeriodSeconds: 30
-  resources:
-    limits:
-     cpu: 200m
-     memory: 256Mi
-    requests:
-     cpu: 100m
-     memory: 128Mi
-  failureThreshold: 1
-  readyInitialDelaySeconds: 5
-  liveInitialDelaySeconds: 60
-  periodSeconds: 2
-  successThreshold: 1
-  timeoutSeconds: 1
-
-sinker:
-  replicaCount: 1
-  image:
-    repository: gcr.io/k8s-prow/sinker
-    tag: v20181113-9b11013
-  imagePullPolicy: IfNotPresent
-  terminationGracePeriodSeconds: 30
-  resources:
-    limits:
-     cpu: 200m
-     memory: 256Mi
-    requests:
-     cpu: 100m
-     memory: 128Mi
-
-plugins:
-  yaml: ""
-
-user: james-foo
-
-tide:
-  replicaCount: 1
-  probe:
-    path: /
-  image:
-    repository: gcr.io/k8s-prow/tide
-    tag: v20181113-9b11013
-  imagePullPolicy: IfNotPresent
-  terminationGracePeriodSeconds: 30
-  args:
-    - --dry-run=false
-    #- --github-endpoint=http://ghproxy
-    - --github-endpoint=https://api.github.com
-  resources:
-    limits:
-     cpu: 200m
-     memory: 256Mi
-    requests:
-     cpu: 100m
-     memory: 128Mi
-  service:
-    type: ClusterIP
-    externalPort: 80
-    internalPort: 8888
-    annotations:
-      fabric8.io/expose: "true"
-      fabric8.io/ingress.annotations: "kubernetes.io/ingress.class: nginx\nnginx.ingress.kubernetes.io/auth-type: basic\nnginx.ingress.kubernetes.io/auth-secret: jx-basic-auth"
-
-tillerNamespace: kube-system
+env:
+  GIT_AUTHOR_NAME: "jenkins-x-bot"
+  GIT_AUTHOR_EMAIL: "jenkins-x@googlegroups.com"
+  XDG_CONFIG_HOME: "/home/jenkins"
+  MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"

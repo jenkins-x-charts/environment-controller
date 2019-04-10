@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "environment.controller.name" . }}
+  labels:
+    app: {{ template "environment.controller.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "environment.controller.name" . }}
+    spec:
+      serviceAccountName: {{ template "environment.controller.name" . }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      containers:
+      - name: environment-controller
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: SYSTEM_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+
+      envFrom:
+      - configMapRef:
+          name: environment-controller
+{{ if .Values.args }}
+        args:
+{{ toYaml .Values.args | indent 10 }}
+{{- end }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+        volumeMounts:
+        - mountPath: /etc/config-logging
+          name: config-logging
+      volumes:
+      - configMap:
+          name: config-logging
+        name: config-logging

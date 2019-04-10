@@ -1,13 +1,11 @@
-{{- if .Values.build.auth.git.username }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: knative-build-bot
+  name: environment-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: knative-build-bot
+  name: environment-controller
 subjects:
 - kind: ServiceAccount
-  name: knative-build-bot
-{{- end }}
+  name: environment-controller

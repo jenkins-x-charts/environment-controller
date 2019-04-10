@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+{{- if .Values.service.name }}
+  name: {{ .Values.service.name }}
+{{- else }}
+  name: environment-controller
+{{- end }}
+  annotations:
+    expose.config.fabric8.io/url-key: "WEBHOOK_URL"
+data:
+  WEBHOOK_URL: ""

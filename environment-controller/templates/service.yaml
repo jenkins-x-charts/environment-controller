@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.service.name }}
+  name: {{ .Values.service.name }}
+{{- else }}
+  name: environment-controller
+{{- end }}
+  labels:
+    app: {{ template "environment.controller.name" . }}
+{{- if .Values.service.annotations }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+{{- end }}
+spec:
+  ports:
+  - name: metrics
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    app: {{ template "environment.controller.name" . }}
