@@ -2,6 +2,15 @@
 # if not specified its generated on the fly
 hmacToken: ""
 
+## the git source URL of the environment used for GitOps promotion
+source:
+  owner: ""
+  repo: ""
+  serverUrl: "https://github.com"
+  gitKind: "github"
+  user: ""
+  tken: ""
+
 image:
   repository: gcr.io/jenkinsxio/builder-maven
   tag: 0.1.340
