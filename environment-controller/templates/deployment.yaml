@@ -16,7 +16,7 @@ spec:
       labels:
         app: {{ template "environment.controller.name" . }}
     spec:
-      serviceAccountName: {{ template "environment.controller.name" . }}
+      serviceAccountName: environment-controller
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       containers:
       - name: environment-controller
