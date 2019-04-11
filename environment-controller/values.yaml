@@ -9,7 +9,7 @@ source:
   serverUrl: "https://github.com"
   gitKind: "github"
   user: ""
-  tken: ""
+  token: ""
 
 image:
   repository: gcr.io/jenkinsxio/builder-maven
