@@ -3,11 +3,4 @@ dependencies:
 - name: "tekton"
   repository: "http://chartmuseum.jenkins-x.io"
   version: "0.0.33"
-- name: "exposecontroller"
-  repository: "http://chartmuseum.jenkins-x.io"
-  version: "2.3.98"
-  alias: "expose"
-- name: "exposecontroller"
-  repository: "http://chartmuseum.jenkins-x.io"
-  version: "2.3.98"
-  alias: "cleanup"
+

@@ -13,10 +13,11 @@ metadata:
 {{ toYaml .Values.service.annotations | indent 4 }}
 {{- end }}
 spec:
+  type: {{ .Values.service.type }}
   ports:
-  - name: metrics
-    port: 9090
+  - port: {{ .Values.service.externalPort }}
+    targetPort: {{ .Values.service.internalPort }}
     protocol: TCP
-    targetPort: 9090
+    name: http
   selector:
     app: {{ template "environment.controller.name" . }}

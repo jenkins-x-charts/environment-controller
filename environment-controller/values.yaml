@@ -2,7 +2,10 @@
 # if not specified its generated on the fly
 hmacToken: ""
 
-## the git source URL of the environment used for GitOps promotion
+# the webhook URL to expose this service
+webhookUrl: ""
+
+# the git source repositoruy of the environment used for GitOps promotion
 source:
   owner: ""
   repo: ""
@@ -33,7 +36,7 @@ resources:
    memory: 128Mi
 service:
   name: environment-controller
-  type: ClusterIP
+  type: LoadBalancer
   externalPort: 80
   internalPort: 8080
   annotations:
@@ -45,20 +48,3 @@ env:
   GIT_AUTHOR_EMAIL: "jenkins-x@googlegroups.com"
   XDG_CONFIG_HOME: "/home/jenkins"
   MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
-
-
-# exposecontroller hooks
-expose:
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-    # use value of `path` to use path based ingress
-    #config:
-    #pathMode: "path"
-
-cleanup:
-  Args:
-  - --cleanup
-  Annotations:
-    helm.sh/hook: pre-delete
-    helm.sh/hook-delete-policy: hook-succeeded

@@ -27,10 +27,14 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-
-        envFrom:
-        - configMapRef:
-            name: environment-controller
+        - name: "WEBHOOK_URL"
+          value: "{{ .Values.webhookUrl }}"
+        - name: "GIT_SERVER_URL"
+          value: "{{ .Values.source.serverUrl }}"
+        - name: "OWNER"
+          value: "{{ .Values.source.owner }}"
+        - name: "REPO"
+          value: "{{ .Values.source.repo }}"
         command:
 {{ toYaml .Values.command | indent 10 }}
 {{ if .Values.args }}
