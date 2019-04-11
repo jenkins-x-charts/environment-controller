@@ -22,16 +22,17 @@ spec:
       - name: environment-controller
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        command: ["jx", "controller", "environment"]
         env:
         - name: SYSTEM_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
 
-      envFrom:
-      - configMapRef:
-          name: environment-controller
+        envFrom:
+        - configMapRef:
+            name: environment-controller
+        command:
+{{ toYaml .Values.command | indent 10 }}
 {{ if .Values.args }}
         args:
 {{ toYaml .Values.args | indent 10 }}
