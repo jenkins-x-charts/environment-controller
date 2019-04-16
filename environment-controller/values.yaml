@@ -5,7 +5,15 @@ hmacToken: ""
 # the webhook URL to expose this service
 webhookUrl: ""
 
-# the git source repositoruy of the environment used for GitOps promotion
+
+# lets only watch the local namespace for tekton
+rbac:
+  cluster: false
+tekton:
+  rbac:
+    cluster: false
+
+# the git source repository of the environment used for GitOps promotion
 source:
   owner: ""
   repo: ""
@@ -48,8 +56,3 @@ env:
   GIT_AUTHOR_EMAIL: "jenkins-x@googlegroups.com"
   XDG_CONFIG_HOME: "/home/jenkins"
   MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
-
-# lets only watch the local namespace for tekton
-tekton:
-  rbac:
-    cluster: false
