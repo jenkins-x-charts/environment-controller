@@ -6,10 +6,10 @@ hmacToken: ""
 webhookUrl: ""
 
 
-# lets only watch the local namespace for tekton
-rbac:
-  cluster: false
+# lets only watch the local namespace for tekton and avoid the tekton webhook component
 tekton:
+  webhook:
+    enabled: false
   rbac:
     cluster: false
 
