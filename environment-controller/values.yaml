@@ -24,7 +24,7 @@ source:
 
 image:
   repository: gcr.io/jenkinsxio/builder-maven
-  tag: 0.1.402
+  tag: 0.1.408
 imagePullPolicy: IfNotPresent
 terminationGracePeriodSeconds: 180
 probe:
@@ -35,6 +35,7 @@ command:
 args:
 - "controller"
 - "environment"
+- "-b"
 resources:
   limits:
    cpu: 400m
