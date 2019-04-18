@@ -12,6 +12,12 @@ projectId: ""
 buildPackURL: ""
 buildPackRef: ""
 
+# docker registry host name such as: gcr.io, docker.io
+dockerRegistry: ""
+
+# the user/organisation/group of images in the docker registry - appended to the docker registry host in docker image names
+dockerRegistryOrg: ""
+
 # lets only watch the local namespace for tekton and avoid the tekton webhook component
 tekton:
   webhook:

@@ -41,6 +41,10 @@ spec:
           value: "{{ .Values.buildPackURL }}"
         - name: "BUILD_PACK_REF"
           value: "{{ .Values.buildPackRef }}"
+        - name: "DOCKER_REGISTRY"
+          value: "{{ .Values.dockerRegistry }}"
+        - name: "DOCKER_REGISTRY_ORG"
+          value: "{{ .Values.dockerRegistryOrg }}"
         # lets pretend to be in a pipeline so that we load the Pipeline User credentials
         - name: "JX_BUILD_NUMBER"
           value: "1"
