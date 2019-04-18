@@ -15,3 +15,9 @@ rules:
       - "*"
     verbs:
       - "*"
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - "*"
+    verbs:
+      - "*"

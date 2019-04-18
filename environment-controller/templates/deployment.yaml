@@ -45,6 +45,8 @@ spec:
           value: "{{ .Values.dockerRegistry }}"
         - name: "DOCKER_REGISTRY_ORG"
           value: "{{ .Values.dockerRegistryOrg }}"
+        - name: "XDG_CONFIG_HOME"
+          value: "/home/jenkins"
         # lets pretend to be in a pipeline so that we load the Pipeline User credentials
         - name: "JX_BUILD_NUMBER"
           value: "1"
