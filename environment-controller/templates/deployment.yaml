@@ -35,6 +35,9 @@ spec:
           value: "{{ .Values.source.owner }}"
         - name: "REPO"
           value: "{{ .Values.source.repo }}"
+        # lets pretend to be in a pipeline so that we load the Pipeline User credentials
+        - name: "JX_BUILD_NUMBER"
+          value: "1"
         command:
 {{ toYaml .Values.command | indent 10 }}
 {{ if .Values.args }}
