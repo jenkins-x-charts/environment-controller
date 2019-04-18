@@ -5,6 +5,12 @@ hmacToken: ""
 # the webhook URL to expose this service
 webhookUrl: ""
 
+# the cloud project ID
+projectId: ""
+
+# the build pack used for the pipeline
+buildPackURL: ""
+buildPackRef: ""
 
 # lets only watch the local namespace for tekton and avoid the tekton webhook component
 tekton:

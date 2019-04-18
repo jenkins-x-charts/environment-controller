@@ -35,6 +35,12 @@ spec:
           value: "{{ .Values.source.owner }}"
         - name: "REPO"
           value: "{{ .Values.source.repo }}"
+        - name: "PROJECT_ID"
+          value: "{{ .Values.projectId }}"
+        - name: "BUILD_PACK_URL"
+          value: "{{ .Values.buildPackURL }}"
+        - name: "BUILD_PACK_REF"
+          value: "{{ .Values.buildPackRef }}"
         # lets pretend to be in a pipeline so that we load the Pipeline User credentials
         - name: "JX_BUILD_NUMBER"
           value: "1"
