@@ -1,0 +1,12 @@
+{{ if .Values.chartmuseumHostName }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-x-chartmuseum
+  labels:
+    app: chartmuseum
+    release: jenkins-x
+spec:
+  type: ExternalName
+  externalName: {{ .Values.chartmuseumHostName }}
+{{ end }}

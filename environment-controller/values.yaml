@@ -1,22 +1,31 @@
+# Mandatory properties
+
 # allows you to define the hmac secret from a helm secret
 # if not specified its generated on the fly
 hmacToken: ""
 
-# the webhook URL to expose this service
-webhookUrl: ""
+# the host name without scheme or trailing / of the chart repository to find charts to deploy
+chartmuseumHostName: ""
 
-# the cloud project ID
+# docker registry host name such as: gcr.io, docker.io
+dockerRegistry: ""
+
+# the cloud project ID if using Google Cloud
 projectId: ""
+
+# the user/organisation/group of images in the docker registry - appended to the docker registry host in docker image names
+dockerRegistryOrg: ""
+
+
+
+# Optional Properties
 
 # the build pack used for the pipeline
 buildPackURL: ""
 buildPackRef: ""
 
-# docker registry host name such as: gcr.io, docker.io
-dockerRegistry: ""
-
-# the user/organisation/group of images in the docker registry - appended to the docker registry host in docker image names
-dockerRegistryOrg: ""
+# the webhook URL to expose this service
+webhookUrl: ""
 
 # lets only watch the local namespace for tekton and avoid the tekton webhook component
 tekton:
