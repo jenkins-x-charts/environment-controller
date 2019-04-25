@@ -4,9 +4,6 @@
 # if not specified its generated on the fly
 hmacToken: ""
 
-# the host name without scheme or trailing / of the chart repository to find charts to deploy
-chartmuseumHostName: ""
-
 # docker registry host name such as: gcr.io, docker.io
 dockerRegistry: ""
 
