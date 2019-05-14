@@ -31,6 +31,8 @@ spec:
           value: "{{ .Values.webhookUrl }}"
         - name: "GIT_SERVER_URL"
           value: "{{ .Values.source.serverUrl }}"
+        - name: "GIT_KIND"
+          value: "{{ .Values.source.gitKind }}"
         - name: "OWNER"
           value: "{{ .Values.source.owner }}"
         - name: "REPO"
