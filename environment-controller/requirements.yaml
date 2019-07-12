@@ -1,6 +1,4 @@
----
 dependencies:
-- name: "tekton"
-  repository: "http://chartmuseum.jenkins-x.io"
-  version: "0.0.35"
-
+- name: tekton
+  repository: http://chartmuseum.jenkins-x.io
+  version: 0.0.35
