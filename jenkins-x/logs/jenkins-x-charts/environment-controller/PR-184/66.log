@@ -1,0 +1,59 @@
+Step: build-step-credential-initializer-d8mfl:
+
+{"level":"warn","ts":1565209845.2708943,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/master\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1565209845.2714894,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-working-dir-initializer-pq4bp:
+
+{"level":"warn","ts":1565209846.4234383,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1565209846.4268055,"logger":"fallback-logger","caller":"bash/main.go:65","msg":"Successfully executed command \"mkdir -p /workspace/source\""}
+Step: build-step-place-tools:
+
+Step: build-step-git-source-jenkins-x-charts-environment-co-rlpsz:
+
+{"level":"warn","ts":1565209848.6249564,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/master\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1565209849.9033058,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/jenkins-x-charts/environment-controller @ 7f2c2a0cec5f9db46e01d58a1c194cbb0bbc3853 in path /workspace/source"}
+Step: build-step-git-merge:
+
+Warning failed to load version: failed to parse version -dev+9e73adc0b: No Major.Minor.Patch elements found
+time="2019-08-07T20:30:51Z" level=info msg="got "
+Using SHAs from PULL_REFS=master:a6a94d09bde8c034a8ee4a55fb8e15e61dd43047,184:7f2c2a0cec5f9db46e01d58a1c194cbb0bbc3853
+ran git fetch --unshallow origin 7f2c2a0cec5f9db46e01d58a1c194cbb0bbc3853: a6a94d09bde8c034a8ee4a55fb8e15e61dd43047: in 
+ran git checkout master in 
+ran git reset --hard a6a94d09bde8c034a8ee4a55fb8e15e61dd43047 in 
+ran clean --force -d . in 
+ran git merge 7f2c2a0cec5f9db46e01d58a1c194cbb0bbc3853 in 
+Step: build-step-build-build:
+
+rm -rf environment-controller/charts
+rm -rf environment-controller/environment-controller*.tgz
+rm -rf environment-controller/requirements.lock
+helm init --client-only
+Creating /builder/home/.helm 
+Creating /builder/home/.helm/repository 
+Creating /builder/home/.helm/repository/cache 
+Creating /builder/home/.helm/repository/local 
+Creating /builder/home/.helm/plugins 
+Creating /builder/home/.helm/starters 
+Creating /builder/home/.helm/cache/archive 
+Creating /builder/home/.helm/repository/repositories.yaml 
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com 
+Adding local repo with URL: http://127.0.0.1:8879/charts 
+$HELM_HOME has been configured at /builder/home/.helm.
+Not installing Tiller due to 'client-only' flag having been set
+helm repo add jenkins-x http://chartmuseum.jenkins-x.io 	
+"jenkins-x" has been added to your repositories
+helm dependency build environment-controller
+Hang tight while we grab the latest from your chart repositories...
+...Unable to get an update from the "local" chart repository (http://127.0.0.1:8879/charts):
+	Get http://127.0.0.1:8879/charts/index.yaml: dial tcp 127.0.0.1:8879: connect: connection refused
+...Successfully got an update from the "jenkins-x" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete.
+Saving 1 charts
+Downloading tekton from repo http://chartmuseum.jenkins-x.io
+Deleting outdated charts
+helm lint environment-controller
+==> Linting environment-controller
+Lint OK
+
+1 chart(s) linted, no failures
