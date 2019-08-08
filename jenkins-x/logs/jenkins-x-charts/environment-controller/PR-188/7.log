@@ -1,0 +1,9 @@
+Step: build-step-credential-initializer-c6njp:
+
+Unable to retrieve container logs for docker://c5482bcb1d25b11e19df9b9be1f49a17af0e66961aaf6b55d884c78d4b33e107
+Step: build-step-working-dir-initializer-k8k9s:
+
+Unable to retrieve container logs for docker://ea1435623724f14e53618c4580c8547e98e6d7864d5f2641fe58fce957924e4f
+Step: build-step-place-tools:
+
+Unable to retrieve container logs for docker://7eeea32efeda8e6385a2862360c55f2a35daeec720fc02235e683b16cf85933d
