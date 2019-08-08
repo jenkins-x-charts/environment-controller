@@ -1,0 +1,148 @@
+Step: build-step-credential-initializer-88whj:
+
+{"level":"warn","ts":1565279097.8344595,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/master\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1565279097.8350158,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-working-dir-initializer-bfrtk:
+
+{"level":"warn","ts":1565279098.208792,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1565279098.2102118,"logger":"fallback-logger","caller":"bash/main.go:65","msg":"Successfully executed command \"mkdir -p /workspace/source\""}
+Step: build-step-place-tools:
+
+Step: build-step-git-source-jenkins-x-charts-environment-co-tqx7s:
+
+{"level":"warn","ts":1565279100.2733338,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/master\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1565279102.482054,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/jenkins-x-charts/environment-controller @ v0.0.202 in path /workspace/source"}
+Step: build-step-git-merge:
+
+Warning failed to load version: failed to parse version -dev+9e73adc0b: No Major.Minor.Patch elements found
+time="2019-08-08T15:45:03Z" level=info msg="got "
+time="2019-08-08T15:45:03Z" level=warning msg="no SHAs to merge, falling back to initial cloned commit"
+Using SHAs from PULL_REFS=master:635634528f116f575064d06c1c9e98d74b3422a4
+Step: build-step-setup-**-git-credentials:
+
+Generated Git credentials file /builder/home/git/credentials
+Step: build-step-build-basic-auth-username:
+
+/builder/home/basic-auth-user.json
+Step: build-step-build-basic-auth-password:
+
+/builder/home/basic-auth-pass.json
+Step: build-step-build-release:
+
+rm -rf environment-controller/charts
+rm -rf environment-controller/environment-controller*.tgz
+rm -rf environment-controller/requirements.lock
+helm init --client-only
+Creating /builder/home/.helm 
+Creating /builder/home/.helm/repository 
+Creating /builder/home/.helm/repository/cache 
+Creating /builder/home/.helm/repository/local 
+Creating /builder/home/.helm/plugins 
+Creating /builder/home/.helm/starters 
+Creating /builder/home/.helm/cache/archive 
+Creating /builder/home/.helm/repository/repositories.yaml 
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com 
+Adding local repo with URL: http://127.0.0.1:8879/charts 
+$HELM_HOME has been configured at /builder/home/.helm.
+Not installing Tiller due to 'client-only' flag having been set
+helm repo add jenkins-x http://chartmuseum.jenkins-x.io 	
+"jenkins-x" has been added to your repositories
+helm dependency build environment-controller
+Hang tight while we grab the latest from your chart repositories...
+...Unable to get an update from the "local" chart repository (http://127.0.0.1:8879/charts):
+	Get http://127.0.0.1:8879/charts/index.yaml: dial tcp 127.0.0.1:8879: connect: connection refused
+...Successfully got an update from the "jenkins-x" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete.
+Saving 1 charts
+Downloading tekton from repo http://chartmuseum.jenkins-x.io
+Deleting outdated charts
+helm lint environment-controller
+==> Linting environment-controller
+Lint OK
+
+1 chart(s) linted, no failures
+sed -i -e "s/version:.*/version: 0.0.202/" environment-controller/Chart.yaml
+helm package environment-controller
+Successfully packaged chart and saved it to: /workspace/source/environment-controller-0.0.202.tgz
+curl --fail -u *****:************ --data-binary "@environment-controller-0.0.202.tgz" http://jenkins-x-chartmuseum:8080/api/charts
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  7430  100    14  100  7416     53  28111 --:--:-- --:--:-- --:--:-- 28197
+{"saved":true}rm -rf environment-controller*.tgz
+** step changelog  --verbose --version 0.0.202 --rev 635634528f116f575064d06c1c9e98d74b3422a4
+Converted /workspace/source to an unshallow repository
+DEBUG: Using helmBinary helm with feature flag: template-mode
+Generating change log from git ref dacb9a4b70a33b895d7cd7ea790026011ba20050 => 635634528f116f575064d06c1c9e98d74b3422a4
+DEBUG: merging pipeline secrets with local secrets
+DEBUG: merging pipeline secrets with local secrets
+DEBUG: Found commits:
+DEBUG:   commit 635634528f116f575064d06c1c9e98d74b3422a4
+DEBUG:   Author: ************* <35031835+*************@users.noreply.github.com>
+DEBUG:   Date: Thu Aug  8 16:44:27 2019
+DEBUG:       
+Merge pull request #186 from *************/bump-chart-version-6b2d74ec-b9f2-11e9-bf9c-b2ff7a42ff85
+
+chore(deps): bump https://github.com/jenkins-x/jenkins-x-builders
+
+
+DEBUG:   commit 772d7f16d8c003beb4aa703d6a99edf07d535a55
+DEBUG:   Author: ************* <jenkins-x@googlegroups.com>
+DEBUG:   Date: Thu Aug  8 15:38:38 2019
+DEBUG:       chore(deps): bump https://github.com/jenkins-x/jenkins-x-builders from 0.1.638 to 0.1.639
+
+Command run was `** step create pr regex --regex (?m)^\s+repository: gcr.io/jenkinsxio/builder-maven\s+tag: (?P<version>.*) --version 0.1.639 --files prow/values.yaml --files environment-controller/values.yaml --repo https://github.com/jenkins-x-charts/prow.git --repo https://github.com/jenkins-x-charts/environment-controller.git`
+
+
+
+DEBUG:   commit 8f3442bc4439671a826d739fbb30271956653e9e
+DEBUG:   Author: ************* <jenkins-x@googlegroups.com>
+DEBUG:   Date: Thu Aug  8 15:37:24 2019
+DEBUG:       chore(deps): bump https://github.com/jenkins-x/jenkins-x-builders to 0.1.639
+
+Command run was `** step create pr chart --name gcr.io/jenkinsxio/builder-maven --version 0.1.639 --repo https://github.com/jenkins-x-charts/environment-controller.git --repo https://github.com/jenkins-x-charts/prow.git`
+
+
+
+WARNING: Failed to enrich commit 772d7f16d8c003beb4aa703d6a99edf07d535a55 with issues: users.jenkins.io "x-0" already exists
+WARNING: Failed to enrich commit 772d7f16d8c003beb4aa703d6a99edf07d535a55 with issues: users.jenkins.io "x-0" already exists
+DEBUG: merging pipeline secrets with local secrets
+DEBUG: Dependency update yaml is updates:
+- component: ""
+  fromReleaseHTMLURL: https://github.com/jenkins-x/**/releases/tag/v2.0.569
+  fromReleaseName: 2.0.569
+  fromVersion: 2.0.569
+  host: github.com
+  owner: jenkins-x
+  repo: **
+  toReleaseHTMLURL: https://github.com/jenkins-x/**/releases/tag/v2.0.571
+  toReleaseName: 2.0.571
+  toVersion: 2.0.571
+  url: https://github.com/jenkins-x/**
+Finding issues in commit messages using git format
+WARNING: Failed to enrich commit 8f3442bc4439671a826d739fbb30271956653e9e with issues: users.jenkins.io "x-0" already exists
+WARNING: Failed to enrich commit 8f3442bc4439671a826d739fbb30271956653e9e with issues: users.jenkins.io "x-0" already exists
+DEBUG: Generated release notes:
+
+## Changes
+
+### Chores
+
+* deps: bump https://github.com/jenkins-x/jenkins-x-builders from 0.1.638 to 0.1.639
+* deps: bump https://github.com/jenkins-x/jenkins-x-builders to 0.1.639
+
+### Dependency Updates
+
+| Dependency | Component | New Version | Old Version |
+| ---------- | --------- | ----------- | ----------- |
+| [jenkins-x/jenkins-x-builders](https://github.com/jenkins-x/jenkins-x-builders) |  | [0.1.639](https://github.com/jenkins-x/jenkins-x-builders/releases/tag/v0.1.639) | [0.1.638](https://github.com/jenkins-x/jenkins-x-builders/releases/tag/v0.1.638)|
+| [jenkins-x/**](https://github.com/jenkins-x/**) |  | [0.1.639](https://github.com/jenkins-x/jenkins-x-builders/releases/tag/v0.1.639) | [2.0.569](https://github.com/jenkins-x/**/releases/tag/v2.0.569)|
+
+WARNING: No release found for jenkins-x-charts/environment-controller and tag v0.0.202 so creating a new release
+Updated the release information at https://github.com/jenkins-x-charts/environment-controller/releases/tag/v0.0.202
+Uploaded /workspace/source/dependency-matrix/matrix.yaml to release asset https://github.com/jenkins-x-charts/environment-controller/releases/download/v0.0.202/dependency-matrix.yaml
+Uploaded dependency-updates.yaml to release asset https://github.com/jenkins-x-charts/environment-controller/releases/download/v0.0.202/dependency-updates.yaml
+generated: /workspace/source/environment-controller/templates/release.yaml
+Created Release environment-controller-0-0-202 resource in namespace **
+Updating PipelineActivity jenkins-x-charts-environment-controller-master-204 with version 0.0.202
+Updated PipelineActivities jenkins-x-charts-environment-controller-master-204 with release notes URL: https://github.com/jenkins-x-charts/environment-controller/releases/tag/v0.0.202
