@@ -2,5 +2,5 @@
 
 Dependency | Sources | Version | Mismatched versions
 ---------- | ------- | ------- | -------------------
-[jenkins-x/jenkins-x-builders](https://github.com/jenkins-x/jenkins-x-builders) |  | [2.0.1280-618]() | 
+[jenkins-x/jenkins-x-builders](https://github.com/jenkins-x/jenkins-x-builders) |  | [2.0.1281-619]() | 
 [jenkins-x/jx](https://github.com/jenkins-x/jx) | [github.com/jenkins-x/jenkins-x-builders](https://github.com/jenkins-x/jenkins-x-builders) | [2.0.564](https://github.com/jenkins-x/jx/releases/tag/v2.0.564) | 
