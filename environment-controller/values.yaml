@@ -42,7 +42,7 @@ source:
 
 image:
   repository: gcr.io/jenkinsxio/builder-maven
-  tag: 2.1.113-737
+  tag: 2.1.119-738
 imagePullPolicy: IfNotPresent
 terminationGracePeriodSeconds: 180
 probe:
